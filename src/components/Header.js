@@ -12,7 +12,7 @@ const Header = () => {
     <div>
 
       <div>
-        <NavLink><h1>Meow Movies</h1></NavLink>
+        <NavLink><h1 className='bg-black-800'>Meow Movies</h1></NavLink>
       </div>
 
 
