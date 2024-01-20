@@ -1,35 +1,61 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { apiKey, baseUrl } from './constant';
+import { api_key, baseUrl } from './constants';
 
+
+const m = () => {
+  return {};
+}
 
 export const movieApi = createApi({
   reducerPath: 'movieApi',
-  baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: baseUrl,
+    headers: {
+      Authorization: api_key
+    }
+  }),
   endpoints: (builder) => ({
 
-    movieCategory: builder.query({
-      query: (query) => ({
-        url: `/movie/${query}`,
-        params: {
-          api_key: apiKey,
-        }
-      })
 
-    }),
-
-    movieByPage: builder.query({
+    getMovieByCategory: builder.query({
       query: (query) => ({
         url: `/movie/${query.category}`,
         params: {
-          api_key: apiKey,
           page: query.page
         }
       })
+    }),
 
+    getSearchMovie: builder.query({
+      query: (query) => ({
+        url: '/search/movie',
+        params: {
+          query: query
+        }
+      })
+    }),
+
+
+    getMovieDetail: builder.query({
+      query: (query) => ({
+        url: `/movie/${query}`,
+      })
+    }),
+
+    getMovieVideo: builder.query({
+      query: (query) => ({
+        url: `/movie/${query}/videos`,
+      })
     }),
 
 
   })
 });
 
-export const { useMovieByCategoryQuery, useMovieByPageQuery } = movieApi;
+
+export const {
+  useGetMovieByCategoryQuery,
+  useGetMovieDetailQuery,
+  useGetSearchMovieQuery,
+  useGetMovieVideoQuery
+} = movieApi;
